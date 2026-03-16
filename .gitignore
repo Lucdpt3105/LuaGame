@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+Tiny Swords (Free Pack)/
+build/
+dist/
+Lua_example/
+# file tạm
+*.log
+*.tmp
