@@ -1,10 +1,10 @@
-local Map    = require("map")
-local Player = require("Lua-fiesta-game.Code.player")
-local Dino   = require("Lua-fiesta-game.Code.dino")
-local Coin   = require("Lua-fiesta-game.Code.coin")
-local Enemy  = require("Lua-fiesta-game.Code.enemy")
-local Arrow  = require("Lua-fiesta-game.Code.arrow")
-local Effect = require("Lua-fiesta-game.Code.effect")
+local Map    = require("Code.map")
+local Player = require("Code.player")
+local Dino   = require("Code.dino")
+local Coin   = require("Code.coin")
+local Enemy  = require("Code.enemy")
+local Arrow  = require("Code.arrow")
+local Effect = require("Code.effect")
 
 local VIRTUAL_W, VIRTUAL_H = 320, 288
 local NUM_MAPS = 2

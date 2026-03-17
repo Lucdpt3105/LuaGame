@@ -6,7 +6,7 @@ local image
 function Coin.new(x, y)
     local self = setmetatable({}, Coin)
     if not image then
-        image = love.graphics.newImage("Icon_03.png")
+        image = love.graphics.newImage("Asset/Icon_03.png")
     end
 
     self.x = x

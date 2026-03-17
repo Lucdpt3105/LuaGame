@@ -24,8 +24,8 @@ end
 
 local function ensureAssets()
     if not dustImage then
-        dustImage = love.graphics.newImage("Dust_01.png")
-        explosionImage = love.graphics.newImage("Explosion_01.png")
+        dustImage = love.graphics.newImage("Asset/Dust_01.png")
+        explosionImage = love.graphics.newImage("Asset/Explosion_01.png")
         dustQuads = buildQuads(dustImage, 64, 64)
         explosionQuads = buildQuads(explosionImage, 192, 192)
     end

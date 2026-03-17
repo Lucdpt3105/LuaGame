@@ -85,8 +85,8 @@ function Map.new(mapIndex)
     self.tileSize = 32
     self.width    = #self.tiles[1] * self.tileSize
     self.height   = #self.tiles   * self.tileSize
-    self.groundImage = love.graphics.newImage("ground.png")
-    self.treeImage  = love.graphics.newImage("tree.png")
+    self.groundImage = love.graphics.newImage("Asset/ground.png")
+    self.treeImage  = love.graphics.newImage("Asset/tree.png")
     self.treeScaleX = self.tileSize / self.treeImage:getWidth()
     self.treeScaleY = self.tileSize / self.treeImage:getHeight()
     return self

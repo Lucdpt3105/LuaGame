@@ -9,7 +9,7 @@ function Dino.new(x, y)
     self.size   = 24
     self.hp     = 3
     self.maxHp  = 3
-    self.image  = love.graphics.newImage("Hungry-dino 2.png")
+    self.image  = love.graphics.newImage("Asset/Hungry-dino 2.png")
     local imgW  = self.image:getWidth()
     local imgH  = self.image:getHeight()
     self.scaleX = self.size / imgW
