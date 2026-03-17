@@ -8,3 +8,5 @@ Lua_example/
 # file tạm
 *.log
 *.tmp
+*.zip
+*.tar.gz
