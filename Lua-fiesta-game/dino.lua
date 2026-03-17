@@ -7,22 +7,24 @@ function Dino.new(x, y)
     self.y      = y
     self.speed  = 55
     self.size   = 24
-    self.alive  = true
+    self.hp     = 3
+    self.maxHp  = 3
     self.image  = love.graphics.newImage("Hungry-dino 2.png")
     local imgW  = self.image:getWidth()
     local imgH  = self.image:getHeight()
     self.scaleX = self.size / imgW
     self.scaleY = self.size / imgH
-    self.ox     = imgW / 2   -- draw origin at image centre (enables flip)
+    self.ox     = imgW / 2
     self.oy     = imgH / 2
-    self.facing = 1           -- 1 = right, -1 = left
+    self.facing = 1
+    self.hitFlash = 0
     return self
 end
 
 function Dino:update(dt, map, player)
-    if not self.alive then
-        return
-    end
+    if not self:isAlive() then return end
+
+    self.hitFlash = math.max(0, self.hitFlash - dt)
 
     local dx   = player.x - self.x
     local dy   = player.y - self.y
@@ -41,7 +43,6 @@ function Dino:update(dt, map, player)
             self.y = newY
         end
 
-        -- Face the direction of travel
         if dx ~= 0 then
             self.facing = dx > 0 and 1 or -1
         end
@@ -49,14 +50,16 @@ function Dino:update(dt, map, player)
 end
 
 function Dino:draw()
-    if not self.alive then
-        return
-    end
+    if not self:isAlive() then return end
 
     love.graphics.setColor(0, 0, 0, 0.22)
     love.graphics.ellipse("fill", self.x, self.y + 10, 10, 4)
 
-    love.graphics.setColor(1, 1, 1)
+    if self.hitFlash > 0 then
+        love.graphics.setColor(1, 0.4, 0.4)
+    else
+        love.graphics.setColor(1, 1, 1)
+    end
     love.graphics.draw(
         self.image,
         self.x, self.y,
@@ -64,13 +67,28 @@ function Dino:draw()
         self.facing * self.scaleX, self.scaleY,
         self.ox, self.oy
     )
+
+    -- HP bar
+    if self.hp < self.maxHp then
+        local barW = 24
+        local barH = 3
+        local bx   = self.x - barW / 2
+        local by   = self.y - 16
+        love.graphics.setColor(0.2, 0.2, 0.2, 0.8)
+        love.graphics.rectangle("fill", bx, by, barW, barH)
+        love.graphics.setColor(0.9, 0.25, 0.2)
+        love.graphics.rectangle("fill", bx, by, barW * (self.hp / self.maxHp), barH)
+    end
+end
+
+function Dino:hit()
+    self.hp = self.hp - 1
+    self.hitFlash = 0.15
+    return self.hp <= 0
 end
 
 function Dino:touches(player)
-    if not self.alive then
-        return false
-    end
-
+    if not self:isAlive() then return false end
     local dx   = self.x - player.x
     local dy   = self.y - player.y
     local dist = math.sqrt(dx * dx + dy * dy)
@@ -78,11 +96,11 @@ function Dino:touches(player)
 end
 
 function Dino:isAlive()
-    return self.alive
+    return self.hp > 0
 end
 
 function Dino:kill()
-    self.alive = false
+    self.hp = 0
 end
 
 function Dino:getHitRadius()
@@ -90,4 +108,3 @@ function Dino:getHitRadius()
 end
 
 return Dino
-

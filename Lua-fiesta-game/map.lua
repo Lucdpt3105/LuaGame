@@ -68,6 +68,15 @@ local PORTAL_DEST = {
     { mapIndex = 1, spawnX = 16*32+16, spawnY = 8*32-16 },  -- map 2 → map 1
 }
 
+-- ── Static helpers (no instance needed) ─────────────────────
+function Map.getCoinCount(mapIndex)
+    return #MAP_COINS[mapIndex]
+end
+
+function Map.getEnemyCount(mapIndex)
+    return #MAP_ENEMIES[mapIndex]
+end
+
 -- ── Constructor ──────────────────────────────────────────────
 function Map.new(mapIndex)
     local self = setmetatable({}, Map)
