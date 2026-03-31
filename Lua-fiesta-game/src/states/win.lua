@@ -35,7 +35,7 @@ function WinState.draw()
     love.graphics.printf("Điểm: " .. (data.score or 0), 0, 160, VIRTUAL_W, "center")
 
     love.graphics.setColor(0.8, 0.8, 0.8)
-    love.graphics.printf("Press R to play again", 0, 195, VIRTUAL_W, "center")
+    love.graphics.printf("nHẤN R ĐỂ CHƠI LẠI", 0, 195, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.pop()
