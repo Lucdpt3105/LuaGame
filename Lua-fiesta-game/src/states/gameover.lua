@@ -27,7 +27,7 @@ function GameOverState.draw()
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_W, VIRTUAL_H)
 
     love.graphics.setColor(1, 0.2, 0.2)
-    love.graphics.printf("CAUGHT!", 0, 85, VIRTUAL_W, "center")
+    love.graphics.printf("Bị Tóm Rồi Con!", 0, 85, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.printf(string.format("Time:  %.1f s", data.surviveTime or 0),  0, 118, VIRTUAL_W, "center")
