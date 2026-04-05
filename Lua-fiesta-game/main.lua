@@ -7,6 +7,8 @@ local states = {
     win      = require("src.states.win"),
 }
 
+local fontManager = require("src.utils.fontManager")  -- Thêm font manager
+
 local currentState
 local currentName
 local playState  -- keep reference for background drawing
@@ -18,6 +20,7 @@ local function switchState(name, params)
 end
 
 function love.load()
+    fontManager.init()  -- Khởi tạo font hỗ trợ Việt
     love.graphics.setDefaultFilter("nearest", "nearest")
     math.randomseed(os.time())
     playState = states.play
