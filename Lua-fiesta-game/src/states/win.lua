@@ -30,12 +30,12 @@ function WinState.draw()
     love.graphics.printf("YOU WIN!", 0, 80, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
-    love.graphics.printf("All coins collected & monsters slain!", 0, 110, VIRTUAL_W, "center")
+    love.graphics.printf("Mày đã gom xong vàng và đã diệt quái", 0, 110, VIRTUAL_W, "center")
     love.graphics.printf(string.format("Time: %.1f s", data.surviveTime or 0), 0, 140, VIRTUAL_W, "center")
-    love.graphics.printf("Score: " .. (data.score or 0), 0, 160, VIRTUAL_W, "center")
+    love.graphics.printf("Điểm: " .. (data.score or 0), 0, 160, VIRTUAL_W, "center")
 
     love.graphics.setColor(0.8, 0.8, 0.8)
-    love.graphics.printf("Press R to play again", 0, 195, VIRTUAL_W, "center")
+    love.graphics.printf("nHẤN R ĐỂ CHƠI LẠI", 0, 195, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.pop()
