@@ -10,6 +10,7 @@ local Arrow  = require("src.entities.arrow")
 local Effect = require("src.entities.effect")
 local Camera = require("src.systems.camera")
 local HUD    = require("src.systems.hud")
+local Audio  = require("src.systems.audio")
 
 local VIRTUAL_W, VIRTUAL_H = 320, 288
 local NUM_MAPS = Map.getNumMaps()
@@ -98,6 +99,7 @@ local function tryShoot()
         player:beginShoot(dirX, dirY)
         local arrowX, arrowY = player:getArrowSpawn()
         table.insert(arrows, Arrow.new(arrowX, arrowY, dirX, dirY))
+        Audio.playBowAttack()
     end
 end
 
@@ -111,8 +113,10 @@ local function updateArrows(dt)
             if killed then
                 score = score + 100
                 spawnExplosion(dino.x, dino.y)
+                Audio.playRandomBlocked()
             else
                 score = score + 20
+                Audio.playRandomHit()
             end
             shouldRemove = true
         end
@@ -125,8 +129,10 @@ local function updateArrows(dt)
                     if killed then
                         score = score + 35
                         spawnExplosion(enemy.x, enemy.y)
+                        Audio.playRandomBlocked()
                     else
                         score = score + 10
+                        Audio.playRandomHit()
                     end
                     shouldRemove = true
                     break
@@ -259,11 +265,13 @@ function PlayState.enter()
     initEnemies()
     initDino()
     clearTransientWorldState()
+    Audio.startMusic()
 end
 
 function PlayState.update(dt)
     surviveTime    = surviveTime + dt
     portalCooldown = math.max(0, portalCooldown - dt)
+    Audio.updateFootstepTimer(dt)
 
     player:update(dt, map)
     tryShoot()
@@ -273,10 +281,16 @@ function PlayState.update(dt)
     spawnDust(dt)
     updateEffects(dt)
 
+    -- Footstep sounds when player is moving
+    if player.moving then
+        Audio.playFootstep()
+    end
+
     for _, coin in ipairs(coins) do
         coin:update(dt)
         if coin:checkCollect(player) then
             score = score + 10
+            Audio.playCoinPickup()
         end
     end
 
@@ -285,6 +299,7 @@ function PlayState.update(dt)
     if portalCooldown <= 0 then
         local tile = map:getTileAt(player.x, player.y)
         if tile == 2 then
+            Audio.playPortal()
             switchMap(map:getPortalDest())
         end
     end
@@ -293,12 +308,16 @@ function PlayState.update(dt)
     if dino:touches(player) then
         if surviveTime > bestTime  then bestTime  = surviveTime end
         if score       > bestScore then bestScore = score end
+        Audio.stopMusic()
+        Audio.playGameOver()
         return "gameover", { surviveTime = surviveTime, score = score, bestTime = bestTime, bestScore = bestScore }
     end
     for _, en in ipairs(enemies) do
         if en:touches(player) then
             if surviveTime > bestTime  then bestTime  = surviveTime end
             if score       > bestScore then bestScore = score end
+            Audio.stopMusic()
+            Audio.playGameOver()
             return "gameover", { surviveTime = surviveTime, score = score, bestTime = bestTime, bestScore = bestScore }
         end
     end
@@ -307,6 +326,8 @@ function PlayState.update(dt)
     if checkWinCondition() then
         if surviveTime > bestTime  then bestTime  = surviveTime end
         if score       > bestScore then bestScore = score end
+        Audio.stopMusic()
+        Audio.playWin()
         return "win", { surviveTime = surviveTime, score = score, bestTime = bestTime, bestScore = bestScore }
     end
 
