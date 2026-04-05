@@ -2,6 +2,7 @@
 -- Game over screen state
 
 local VIRTUAL_W, VIRTUAL_H = 320, 288
+local localization = require("src.utils.localization")
 
 local GameOverState = {}
 local data = {}
@@ -27,16 +28,16 @@ function GameOverState.draw()
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_W, VIRTUAL_H)
 
     love.graphics.setColor(1, 0.2, 0.2)
-    love.graphics.printf("NGOO VC!", 0, 85, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("gameover_title"), 0, 85, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
-    love.graphics.printf(string.format("Time:  %.1f s", data.surviveTime or 0),  0, 118, VIRTUAL_W, "center")
-    love.graphics.printf("Score: " .. (data.score or 0),                          0, 138, VIRTUAL_W, "center")
-    love.graphics.printf(string.format("Best Time:  %.1f s", data.bestTime or 0), 0, 162, VIRTUAL_W, "center")
-    love.graphics.printf("Best Score: " .. (data.bestScore or 0),                 0, 182, VIRTUAL_W, "center")
+    love.graphics.printf(string.format(localization.getText("time") .. ":  %.1f %s", data.surviveTime or 0, localization.getText("seconds")),  0, 118, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("score") .. ": " .. (data.score or 0),                          0, 138, VIRTUAL_W, "center")
+    love.graphics.printf(string.format(localization.getText("best_time") .. ":  %.1f %s", data.bestTime or 0, localization.getText("seconds")), 0, 162, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("best_score") .. ": " .. (data.bestScore or 0),                 0, 182, VIRTUAL_W, "center")
 
     love.graphics.setColor(0.8, 0.8, 0.8)
-    love.graphics.printf("CHƠI LẠI BẰNG CÁCH ẤN R", 0, 210, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("retry_prompt"), 0, 210, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.pop()

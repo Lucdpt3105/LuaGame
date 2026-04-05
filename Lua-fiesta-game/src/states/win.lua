@@ -2,6 +2,7 @@
 -- Win screen state
 
 local VIRTUAL_W, VIRTUAL_H = 320, 288
+local localization = require("src.utils.localization")
 
 local WinState = {}
 local data = {}
@@ -27,15 +28,15 @@ function WinState.draw()
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_W, VIRTUAL_H)
 
     love.graphics.setColor(0.2, 1, 0.3)
-    love.graphics.printf("YOU WIN!", 0, 80, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("win_title"), 0, 80, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
-    love.graphics.printf("Mày đã gom xong vàng và đã diệt quái", 0, 110, VIRTUAL_W, "center")
-    love.graphics.printf(string.format("Time: %.1f s", data.surviveTime or 0), 0, 140, VIRTUAL_W, "center")
-    love.graphics.printf("Điểm: " .. (data.score or 0), 0, 160, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("win_message"), 0, 110, VIRTUAL_W, "center")
+    love.graphics.printf(string.format(localization.getText("time") .. ": %.1f %s", data.surviveTime or 0, localization.getText("seconds")), 0, 140, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("score") .. ": " .. (data.score or 0), 0, 160, VIRTUAL_W, "center")
 
     love.graphics.setColor(0.8, 0.8, 0.8)
-    love.graphics.printf("nHẤN R ĐỂ CHƠI LẠI", 0, 195, VIRTUAL_W, "center")
+    love.graphics.printf(localization.getText("replay_prompt"), 0, 195, VIRTUAL_W, "center")
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.pop()
